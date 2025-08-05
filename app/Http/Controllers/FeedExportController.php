@@ -13,7 +13,7 @@ class FeedExportController extends Controller
     public function __invoke(Feed $feed)
     {
         $feed->update([
-            'last_accessed_at' => now()
+            'last_accessed_at' => now(),
         ]);
 
         $calendar = Calendar::create($feed->name);
@@ -21,11 +21,10 @@ class FeedExportController extends Controller
         $events = $feed->events()
             ->whereDate('start_at', '>=', today())
             ->get()
-            ->map(fn (Event $event) =>
-               IcalEvent::create()
-                   ->name($event->title)
-                   ->startsAt($event->start_at)
-                   ->endsAt($event->end_at)
+            ->map(fn (Event $event) => IcalEvent::create()
+                ->name($event->title)
+                ->startsAt($event->start_at)
+                ->endsAt($event->end_at)
             );
 
         $calendar->event($events->toArray());

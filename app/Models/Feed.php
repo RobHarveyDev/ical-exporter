@@ -15,7 +15,7 @@ class Feed extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'last_accessed_at'
+        'last_accessed_at',
     ];
 
     public function events(): HasMany

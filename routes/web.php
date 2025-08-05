@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/feeds', [FeedsController::class, 'store'])->name('feeds.store');
     Route::get('/feeds/{feed:uuid}', [FeedsController::class, 'show'])->name('feeds.show');
 
-    Route::post('/feeds/{feed:uuid}/event', [EventsController::class ,'store'])->name('events.store');
+    Route::post('/feeds/{feed:uuid}/event', [EventsController::class, 'store'])->name('events.store');
     Route::delete('/feeds/{feed:uuid}/event/{event:uuid}', [EventsController::class, 'destroy'])->name('events.destroy');
 });
 

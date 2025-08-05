@@ -11,7 +11,7 @@ class FeedsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=> ['required', 'string', 'max:64'],
+            'name' => ['required', 'string', 'max:64'],
         ]);
 
         $request->user()->feeds()->create([
@@ -29,9 +29,10 @@ class FeedsController extends Controller
         }
 
         $feed->load('events');
+
         return view('dashboard', [
             'feeds' => Feed::all(),
-            'currentFeed' => $feed
+            'currentFeed' => $feed,
         ]);
     }
 }
