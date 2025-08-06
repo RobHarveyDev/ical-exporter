@@ -31,7 +31,7 @@ class FeedsController extends Controller
         $feed->load('events');
 
         return view('dashboard', [
-            'feeds' => Feed::all(),
+            'feeds' => $request->user()->feeds()->latest()->get(),
             'currentFeed' => $feed,
         ]);
     }
