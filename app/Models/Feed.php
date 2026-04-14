@@ -15,8 +15,16 @@ class Feed extends Model
     protected $fillable = [
         'uuid',
         'name',
+        'reject_head_requests',
         'last_accessed_at',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'reject_head_requests' => 'boolean',
+        ];
+    }
 
     public function events(): HasMany
     {

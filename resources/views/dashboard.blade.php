@@ -54,6 +54,18 @@
                         <flux:heading size="lg">{{ $currentFeed->name }}</flux:heading>
                         <flux:subheading>{{ $currentFeed->export_url }}</flux:subheading>
                     </div>
+                    <div class="w-full mb-3">
+                        <form action="{{ route('feeds.update', $currentFeed) }}" method="POST" class="flex items-center gap-3">
+                            @csrf
+                            @method('PATCH')
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="hidden" name="reject_head_requests" value="0" />
+                                <input type="checkbox" name="reject_head_requests" value="1" @checked($currentFeed->reject_head_requests) class="rounded border-zinc-300 dark:border-zinc-600" />
+                                <span class="text-sm">Reject HEAD requests (respond with 405)</span>
+                            </label>
+                            <button type="submit" class="px-2 py-1 text-sm font-medium text-white bg-zinc-800 dark:bg-white dark:text-zinc-800 rounded-md hover:opacity-90">Save</button>
+                        </form>
+                    </div>
                     <div class="w-full">
                         <flux:modal.trigger name="add-event">
                             <flux:button variant="primary" icon="calendar-plus">Add Event</flux:button>

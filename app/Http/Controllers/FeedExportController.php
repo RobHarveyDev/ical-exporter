@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Feed;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event as IcalEvent;
 
 class FeedExportController extends Controller
 {
-    public function __invoke(Feed $feed)
+    public function __invoke(Request $request, Feed $feed)
     {
+        if ($feed->reject_head_requests && $request->isMethod('HEAD')) {
+            abort(405);
+        }
+
         $feed->update([
             'last_accessed_at' => now(),
         ]);
