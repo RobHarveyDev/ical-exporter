@@ -12,12 +12,29 @@ class FeedsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:64'],
+            'reject_head_requests' => ['sometimes', 'boolean'],
         ]);
 
         $request->user()->feeds()->create([
             'uuid' => Str::uuid(),
             'name' => $request->string('name'),
+            'reject_head_requests' => $request->boolean('reject_head_requests'),
         ]);
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, Feed $feed)
+    {
+        if ($request->user()->cannot('update', $feed)) {
+            abort(403);
+        }
+
+        $request->validate([
+            'reject_head_requests' => ['sometimes', 'boolean'],
+        ]);
+
+        $feed->update($request->only('reject_head_requests'));
 
         return redirect()->back();
     }

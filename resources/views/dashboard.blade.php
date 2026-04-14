@@ -35,6 +35,8 @@
 
                                 <flux:input name="name" label="Name" />
 
+                                <flux:checkbox name="reject_head_requests" value="1" label="Reject HEAD requests (respond with 405)" />
+
                                 <div class="flex">
                                     <flux:spacer />
 
@@ -53,6 +55,14 @@
                     <div class="w-full mb-3">
                         <flux:heading size="lg">{{ $currentFeed->name }}</flux:heading>
                         <flux:subheading>{{ $currentFeed->export_url }}</flux:subheading>
+                    </div>
+                    <div class="w-full mb-3">
+                        <form action="{{ route('feeds.update', $currentFeed) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="reject_head_requests" value="0" />
+                            <flux:checkbox name="reject_head_requests" value="1" label="Reject HEAD requests (respond with 405)" :checked="$currentFeed->reject_head_requests" onchange="this.form.submit()" />
+                        </form>
                     </div>
                     <div class="w-full">
                         <flux:modal.trigger name="add-event">
