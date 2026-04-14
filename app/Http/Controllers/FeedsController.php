@@ -34,7 +34,9 @@ class FeedsController extends Controller
             'reject_head_requests' => ['sometimes', 'boolean'],
         ]);
 
-        $feed->update($request->only('reject_head_requests'));
+        $feed->update([
+            'reject_head_requests' => $request->boolean('reject_head_requests'),
+        ]);
 
         return redirect()->back();
     }
